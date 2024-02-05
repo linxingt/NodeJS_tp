@@ -9,14 +9,14 @@ import crypto from 'crypto';
 export const getData = async (url) => {
     // A Compléter
     try {
-        // Add your Marvel API public and private keys
-        const publicKey = '2adfdfae58e2b9c211da24318aa119e0';
-        const privateKey = '3a15b2e9e9f4e9e7cecc5631a1a7c470635ad1a0';
-        const timestamp = new Date().getTime().toString();
 
-        // const publicKey = process.env.PUBLIC_KEY;
-        // const privateKey = process.env.PRIVATE_KEY;
-        // const timestamp = process.env.TS;
+        // const publicKey = '2adfdfae58e2b9c211da24318aa119e0';
+        // const privateKey = '3a15b2e9e9f4e9e7cecc5631a1a7c470635ad1a0';
+        // const timestamp = new Date().getTime().toString();
+
+        const publicKey = process.env.PUBLIC_KEY;
+        const privateKey = process.env.PRIVATE_KEY;
+        const timestamp = process.env.TS;
 
         const hash = await getHash(publicKey, privateKey, timestamp);
 
@@ -30,7 +30,7 @@ export const getData = async (url) => {
         const characters = marvelData.data.results
             .filter((character) => character.name && character.thumbnail.path && character.thumbnail.extension)
             .map((character) => ({
-                // Assuming 'portrait_xlarge' is a valid size, replace it with the actual desired size
+
                 imageUrl: `${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`,
                 name: character.name
             }));

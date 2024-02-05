@@ -1,4 +1,5 @@
 # Use the official Node.js LTS slim image
+#FROM node:lts-bullseye-slim AS builder
 FROM node:lts-bullseye-slim
 
 # Set the working directory to /home/node/app
@@ -16,6 +17,19 @@ RUN npm install
 
 # Copy the rest of the application files to the working directory
 COPY . .
+
+#
+## Build the application
+#RUN npm run build
+#
+#
+## Second stage - Use a smaller Node.js image for the final image
+#FROM node:lts-bullseye-slim
+#
+#WORKDIR /home/node/app
+#
+## Copy only necessary files from the builder stage
+#COPY --from=builder /home/node/app/dist ./contents
 
 # Expose the port that your app is listening on
 EXPOSE 3000

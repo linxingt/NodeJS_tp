@@ -8,12 +8,12 @@ import fastify from 'fastify';
 import handlebars from 'handlebars';
 import fastifyView from '@fastify/view';
 
-// import dotenv from 'dotenv';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const PORT = 3000;
 
-// dotenv.config();
-// const app = fastify();
 const app = fastify();
 // const app = fastify({ logger: true });
 
@@ -24,6 +24,7 @@ app.register(fastifyView, {
     },
     root: './templates',
     layout: 'index.hbs',
+    // layout: 'card.html',
 
     options: {
         partials: {
@@ -45,6 +46,7 @@ app.get('/', async (req, res) => {
         // Render the 'index.hbs' template with characters data
         // console.log(characters);
         return res.view('../templates/index.hbs', {characters});//return !!!!!
+        // return res.view('../templates/li.html', {characters});//return !!!!!
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
