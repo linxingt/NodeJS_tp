@@ -1,7 +1,7 @@
 // console.log("Je suis Marvel")
 
 
-import express from 'express';
+// import express from 'express';
 import {getData} from './api.js';
 
 import fastify from 'fastify';
@@ -14,23 +14,61 @@ dotenv.config();
 
 const PORT = 3000;
 
-const app = express();
+const app = fastify();
 
-// Define a route to fetch Marvel API data
+// Register Handlebars as the view engine
+app.register(fastifyView, {
+    engine: {
+        handlebars: handlebars
+    },
+    root: './templates',
+    layout: 'index.hbs',
+    // layout: 'card.html',
+
+    options: {
+        partials: {
+            header: 'header.hbs',
+            footer:
+                'footer.hbs',
+        }
+    },
+
+});
+
+// Define a route to fetch Marvel API data and render the characters on the page
 app.get('/marvel-data', async (req, res) => {
-    const marvelEndpoint = 'https://gateway.marvel.com:443/v1/public/characters';
 
     try {
-        // Fetch Marvel API data using getData function from api.js
-        const personnage = await getData(marvelEndpoint);
+        const marvelEndpoint = 'https://gateway.marvel.com:443/v1/public/characters';
+        const characters = await getData(marvelEndpoint);
 
-        // Send the fetched data as the response
-        res.json(personnage);
+        // Render the 'index.hbs' template with characters data
+        // console.log(characters);
+        return res.view('../templates/index.hbs', {characters});//return !!!!!
+
     } catch (error) {
-        console.error('Error in fetching Marvel data:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
+
+// const app = express();
+//
+// // Define a route to fetch Marvel API data
+// app.get('/marvel-data', async (req, res) => {
+//     const marvelEndpoint = 'https://gateway.marvel.com:443/v1/public/characters';
+//
+//     try {
+//         // Fetch Marvel API data using getData function from api.js
+//         const personnage = await getData(marvelEndpoint);
+//
+//         // Send the fetched data as the response
+//         res.json(personnage);
+//     } catch (error) {
+//         console.error('Error in fetching Marvel data:', error);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// });
 
 // Start the server
 // app.listen(PORT,  () => {
