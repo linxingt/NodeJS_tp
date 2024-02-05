@@ -28,7 +28,8 @@ export const getData = async (url) => {
 
         // Filter and transform the data
         const characters = marvelData.data.results
-            .filter((character) => character.name && character.thumbnail.path && character.thumbnail.extension)
+            .filter((character) => character.name && character.thumbnail.path && character.thumbnail.extension &&
+                !character.thumbnail.path.includes("image_not_available"))
             .map((character) => ({
 
                 imageUrl: `${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`,
