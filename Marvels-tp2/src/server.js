@@ -15,6 +15,7 @@ dotenv.config();
 const PORT = 3000;
 
 const app = fastify();
+//Enabling the logger : fastify({ logger: true })
 
 // Register Handlebars as the view engine
 app.register(fastifyView, {
@@ -45,7 +46,7 @@ app.get('/marvel-data', async (req, res) => {
         // Render the 'index.hbs' template with characters data
         // console.log(characters);
         return res.view('../templates/index.hbs', {characters});//return !!!!!
-
+        // return res.view('../templates/li.html', {characters});//return !!!!!
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('Internal Server Error');
