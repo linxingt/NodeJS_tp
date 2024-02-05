@@ -37,7 +37,7 @@ app.register(fastifyView, {
 
 // Define a route to fetch Marvel API data and render the characters on the page
 app.get('/marvel-data', async (req, res) => {
-
+//app.get('/', async (req, res) => {
     try {
         const marvelEndpoint = 'https://gateway.marvel.com:443/v1/public/characters';
         const characters = await getData(marvelEndpoint);
