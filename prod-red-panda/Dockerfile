@@ -11,9 +11,11 @@ COPY . .
 CMD [ "node", "src/server.js" ]
 
 # docker build . -t redpanda
-# docker run -p 3000:3000 redpanda
+# docker run redpanda
 
+# docker ps
+# docker images
 
 # docker rm -vf $(docker ps -aq)
 # docker rmi -f $(docker images -aq)
-# apres suppression, red panda need recharge
+# apres suppression pout ts, red panda need recharge
