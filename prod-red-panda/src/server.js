@@ -4,12 +4,13 @@ import * as Producer from "./redpanda/producer.js"
 import {getUser} from "./messages/userlist.js";
 import {getStringMessage} from "./messages/stringmessages.js";
 import {getNumberMessage} from "./messages/numbermessage.js";
-import {getConfigNumber, getDebug, getTimeOut, getTopic, getTypeMessage} from "./config/config.js";
+import {getConfigNumber, getDebug, getNumberWord, getTimeOut, getTopic, getTypeMessage} from "./config/config.js";
 
 const configNumber = getConfigNumber()
 const typeMessage = getTypeMessage()
 const topic = getTopic()
 const debug = getDebug()
+const numberWord = getNumberWord()
 
 async function start() {
 
@@ -21,7 +22,7 @@ async function start() {
     setInterval(() => {
         const user = getUser()
         const message = typeMessage === "texte" ?
-            getStringMessage(3) :
+            getStringMessage(numberWord) :
             typeMessage === "nombre" ?
                 getNumberMessage(configNumber) :
                 "Config Error : choisir 'nombre' ou 'texte'"
