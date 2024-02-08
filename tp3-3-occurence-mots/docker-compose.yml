@@ -14,6 +14,7 @@ services:
 
   mynode:
     build:
+#      dans quel context on trouve docker
       context: nodejs
       dockerfile: Dockerfile
     container_name: nodejs-container
