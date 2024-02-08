@@ -13,6 +13,9 @@ export const connexion = async () => {
         eachMessage: async ({ topic, partition, message }) => {
             // Traitez chaque message ici
             console.log(`Received message on topic ${topic}, partition ${partition} at ${formattedDate(message.timestamp.toString())}: ${message.value}`);
+            const stringValue = message.value.toString();
+            const words = stringValue.split(/[,:\s]/)[1].replace(/^\"|\"$/g,'').trim();
+            console.log(`Received words : ${words}`);
         },
     });
 };
@@ -32,6 +35,6 @@ const formattedDate=(timestamp)=>{
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
 
-    const formattedDate = `${day}/${month}/${year} à ${hours}:${minutes}`;
-    return formattedDate;
+    return `${day}/${month}/${year} à ${hours}:${minutes}`;
+
 }
