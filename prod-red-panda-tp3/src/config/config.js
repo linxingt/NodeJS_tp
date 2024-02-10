@@ -10,6 +10,7 @@ export const getConfigNumber = () => {
     else signe = signe === "true";
 
     return {
+        numberWord: Number(process.env.NUMBER_WORD),
         integerSize: Number(process.env.INTEGER_SIZE),
         decimalValue: Number(process.env.DECIMAL_VALUE),
         signed: signe
@@ -37,6 +38,3 @@ export const getLocalBroker = () => {
     return process.env.HOST_IP !== ""
 }
 
-export const getNumberWord = () => {
-    return process.env.NUMBER_WORD
-}
