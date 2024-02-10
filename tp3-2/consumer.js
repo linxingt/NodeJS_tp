@@ -1,23 +1,40 @@
-import { Kafka } from 'kafkajs';
+import {Kafka} from 'kafkajs';
+import { createClient } from 'redis';
+
 const kafka = new Kafka({
     brokers: ['redpanda-0:9092', 'localhost:19092']
 });
 
-const consumer = kafka.consumer({ groupId: 'my-group' });
+const client = createClient({
+    host: 'myredis', // Redis server host
+    port: 6379,               // Redis server port
+    password: "redispwd"
+});
+client.on('error', (err) => console.log('Redis Client Error', err));
 
+await client.connect();
+
+const increment = async (mot) => {
+    // client.INCR(mot);
+    client.INCR(mot);
+};
+
+const consumer = kafka.consumer({groupId: 'my-group'});
 export const connexion = async () => {
     await consumer.connect();
     console.log('Consumer connected to Kafka broker');
-    await consumer.subscribe({ topic: 'mon-super-topic', fromBeginning: true });
+    await consumer.subscribe({topic: 'mon-super-topic', fromBeginning: true});
     await consumer.run({
-        eachMessage: async ({ topic, partition, message }) => {
+        eachMessage: async ({topic, partition, message}) => {
             // Traitez chaque message ici
             console.log(`Received message on topic ${topic}, partition ${partition} at ${formattedDate(message.timestamp.toString())}: ${message.value}`);
             const stringValue = message.value.toString();
-            const words = stringValue.split(/[,:\s]/)[1].replace(/^\"|\"$/g,'').trim();
+            const words = stringValue.split(/[,:\s]/)[1].replace(/^\"|\"$/g, '').trim();
             console.log(`Received words : ${words}`);
+            await increment(words);
         },
     });
+
 };
 
 export const disconnect = async () => {
@@ -25,7 +42,7 @@ export const disconnect = async () => {
     console.log('Consumer disconnected from Kafka broker');
 };
 
-const formattedDate=(timestamp)=>{
+const formattedDate = (timestamp) => {
     const intValue = parseInt(timestamp);
     const date = new Date(intValue);
 
