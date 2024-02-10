@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/prod-red-panda-tp3.iml" filepath="$PROJECT_DIR$/.idea/prod-red-panda-tp3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/tp3-1-prod-red-panda.iml" filepath="$PROJECT_DIR$/.idea/tp3-1-prod-red-panda.iml" />
     </modules>
   </component>
 </project>
