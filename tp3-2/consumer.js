@@ -1,5 +1,5 @@
 import {Kafka} from 'kafkajs';
-import { createClient } from 'redis';
+import {createClient} from 'redis';
 
 const kafka = new Kafka({
     brokers: ['redpanda-0:9092', 'localhost:19092']
@@ -14,9 +14,11 @@ client.on('error', (err) => console.log('Redis Client Error', err));
 
 await client.connect();
 
-const increment = async (mot) => {
+const increment = (mots) => {
     // client.INCR(mot);
-    client.INCR(mot);
+    mots.map(mot => {
+        client.INCR(mot)
+    });
 };
 
 const consumer = kafka.consumer({groupId: 'my-group'});
@@ -28,10 +30,11 @@ export const connexion = async () => {
         eachMessage: async ({topic, partition, message}) => {
             // Traitez chaque message ici
             console.log(`Received message on topic ${topic}, partition ${partition} at ${formattedDate(message.timestamp.toString())}: ${message.value}`);
-            const stringValue = message.value.toString();
-            const words = stringValue.split(/[,:\s]/)[1].replace(/^\"|\"$/g, '').trim();
+            const stringValue = JSON.parse(message.value.toString());
+            const messageValue = stringValue.message;
+            const words = messageValue.split(' ');
             console.log(`Received words : ${words}`);
-            await increment(words);
+            increment(words);
         },
     });
 
