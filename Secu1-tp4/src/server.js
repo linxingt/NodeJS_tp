@@ -24,6 +24,8 @@ fastify.get('/dmz', {}, (req, res) => {
     res.send({replique: "Ca pourrait être mieux protégé..."})
 })
 
+// after() => effectuer actions après requête traitée par le serveur.
+// inclure des manipulations / envois de réponse supplémentaires.
 fastify.after(() => {
     fastify.route({
         method: 'GET',
@@ -32,6 +34,16 @@ fastify.after(() => {
         handler: async (req, reply) => {
             return {
                 replique: 'Un Lannister paye toujours ses dettes !'
+            };
+        }
+    });
+    fastify.route({
+        method: 'GET',
+        url: '/autre',
+        auth: false,
+        handler: async (req, reply) => {
+            return {
+                replique: 'autre accessible sans authentification.!'
             }
         }
     })
