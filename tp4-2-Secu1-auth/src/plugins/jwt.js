@@ -14,11 +14,4 @@ export default fp(async function (app, opts) {
         }
     })
 
-    // export function signToken(payload) {
-    //     return app.jwt.sign(payload);
-    // }
-    //
-    // export function verifyToken(token) {
-    //     return app.jwt.verify(token);
-    // }
 })
