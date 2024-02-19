@@ -1,5 +1,5 @@
 import {createHash} from "node:crypto"
-import { readFileSync } from "node:fs";
+import { readFileSync, readFile } from "node:fs";
 import jwt from "jsonwebtoken";
 
 const users = []    // Simule BDD pour le stockage des utilisateurs
@@ -50,7 +50,7 @@ export const loginUser = async function (req, res) {
         email: user.email,
         role: user.role}
 
-    // const token =  await jwt.sign(payload,readFileSync ('./.ssl/ec_private.pem'),{
+    // const token =  await jwt.sign(payload,readFile ('./.ssl/ec_private.pem'),{
     //     algorithm: 'ES256',
     //     issuer: 'info.iutparis.fr'
     // });
