@@ -4,9 +4,14 @@ const BookSchema = new mongoose.Schema({
     Titre: { type: String, required: true },
     Auteur: { type: String, required: true },
     Description : String,
-    Format : String //soit « poche », « manga » ou « audio »,
-    //Number Date String
+    Format : {
+        type: String,
+        enum: ["poche", "manga", "audio"],//soit « poche », « manga » ou « audio »,
+        default: "poche"
+    },
+    //type : Number Date String
+    //required: ['Titre', 'Auteur']
 });
 
-module.exports = mongoose.model(
+export const BookModel = mongoose.model(
     'book', BookSchema, 'books');

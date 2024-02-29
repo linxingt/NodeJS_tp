@@ -2,6 +2,7 @@ import {addBook} from "../controllers/addHandler.js"
 import {searchBook} from "../controllers/searchHandler.js"
 import {updateBook} from "../controllers/updateHandler.js"
 import {deleteBook} from "../controllers/deleteHandler.js"
+import { BookModel } from "../models/bookSchema.js"
 import helmet from "@fastify/helmet";
 
 export default async (app, opts) => {
@@ -10,28 +11,32 @@ export default async (app, opts) => {
             app.route({
                 method: 'POST',
                 url: '/newBook',
-                handler: addBook
+                handler: addBook,
+                schema:BookModel
             })
 
             app.route({
                 method: 'GET',
                 url: '/searchBook',
                 // preHandler: app.auth([app.authenticate]),
-                handler: searchBook
+                handler: searchBook,
+                schema:BookModel
             })
 
             app.route({
                 method: 'PUT',
                 url: '/updateBook',
                 // preHandler: app.auth([app.authenticate]),
-                handler: updateBook
+                handler: updateBook,
+                schema:BookModel
             })
 
             app.route({
                 method: 'DELETE',
                 url: '/deleteBook',
                 // preHandler: app.auth([app.authenticate]),
-                handler: deleteBook
+                handler: deleteBook,
+                schema:BookModel
             })
         })
 }
