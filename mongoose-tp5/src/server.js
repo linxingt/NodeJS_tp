@@ -1,5 +1,13 @@
-import Fastify from "fastify"
-import mongoose from "mongoose"
+const {build} = await import( "./app.js")
 
-await mongoose.connect('mongodb://127.0.0.1:27017/NodeTP5');
+const app = build({logger: true})
 
+const start = async () => {
+    try {
+        await app.listen({port: 4000})
+    } catch (err) {
+        app.log.error(err)
+        process.exit(1)
+    }
+}
+start()
