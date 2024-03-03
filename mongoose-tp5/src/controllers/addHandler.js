@@ -1,12 +1,22 @@
-import { BookModel } from "../models/bookSchema.js"
+import { Book } from "../models/bookModel.js"
 
 export const addBook = async (req, res) => {
-    const titre = req.body.titre
-    const auteur = req.body.auteur
-    const format = req.body.format
+    let titre = req.body.titre
+    let auteur = req.body.auteur
+    let format = req.body.format
     req.body.desc ??= " "
-    const desc=req.body.desc
-    const newBook = new BookModel({
+    //ou schema default
+    let desc=req.body.desc
+
+    let book = await Book.findOne({
+        Titre: req.body.titre,
+        Auteur: req.body.auteur
+    })
+    if (book) {
+        return res.send('book déjà enregistré')
+    }
+
+    const newBook = new Book({
         Titre: titre,
         Auteur: auteur,
         Description: desc,
@@ -14,5 +24,5 @@ export const addBook = async (req, res) => {
     });
 
     await newBook.save();
-    return res.send('book enregistrées avec succès');
+    return res.send('book enregistré avec succès');
 }
