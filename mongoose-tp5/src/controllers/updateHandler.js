@@ -25,6 +25,6 @@ export const updateBook = async (req, res) => {
         return res.send('book update raté');
     } catch (error) {
         console.error(error);
-        res.send('book update erroné');
+        res.send('book update erroné, check id');
     }
 }

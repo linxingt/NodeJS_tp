@@ -36,10 +36,7 @@ export default async (app, opts) => {
         handler: searchBookByTitle,
         schema: {
             response: {
-                200: {
-                    type: 'array',
-                    items: ReponseSchema
-                }
+                200: ReponseSchema
             }
         }
     })
