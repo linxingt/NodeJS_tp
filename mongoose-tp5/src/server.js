@@ -1,5 +1,6 @@
 const {build} = await import( "./app.js")
 import connect from "./connect.js"
+
 const app = build({logger: true})
 
 const start = async () => {

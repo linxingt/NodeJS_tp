@@ -4,7 +4,7 @@ export const BookInfoSchema = {
     properties: {
         titre: {type: "string"},
         auteur: {type: "string"},
-        description: {type: "string", default: " "},
+        desc: {type: "string", default: " "},
         format: {
             type: 'string',
             enum: ["poche", "manga", "audio"],

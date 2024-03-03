@@ -1,11 +1,11 @@
-import { Book } from "../models/bookModel.js"
+import {Book} from "../models/bookModel.js"
 
 export const updateBook = async (req, res) => {
     // console.log(req.params)
     // console.log(req.body)
     try {
         let resu = await Book.updateOne(
-            { _id: req.params.id },
+            {_id: req.params.id},
             {
                 $set: {
                     Titre: req.body.titre,
@@ -16,11 +16,11 @@ export const updateBook = async (req, res) => {
             }
         ).exec()
         console.log(resu)
-        if(resu.modifiedCount>0)
+        if (resu.modifiedCount > 0)
             return res.send('book update avec succès');
-        else if (resu.matchedCount>0&&resu.modifiedCount===0)
+        else if (resu.matchedCount > 0 && resu.modifiedCount === 0)
             return res.send('pas de modification')
-        else if (resu.matchedCount===0)
+        else if (resu.matchedCount === 0)
             return res.send('pas de book correspondant')
         return res.send('book update raté');
     } catch (error) {
