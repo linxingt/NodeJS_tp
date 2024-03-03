@@ -1,7 +1,14 @@
 const {build} = await import( "./app.js")
 import connect from "./connect.js"
+import {readFileSync} from "node:fs"
 
-const app = build({logger: true})
+const app = build({
+    logger: true,
+    https: {
+        key:readFileSync('./secu/server.key'),
+        cert: readFileSync('./secu/server.crt')
+    }
+})
 
 const start = async () => {
     try {
